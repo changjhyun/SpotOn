@@ -1,1 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpotOn - Smart Spotlight for Mac</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 20px;
+            background: radial-gradient(ellipse at center, #1a1a2e 0%, #0a0a0a 70%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+        }
+
+        .app-icon {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border-radius: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            margin-bottom: 32px;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 20px 60px rgba(99, 102, 241, 0.4);
+        }
+
+        .hero h1 {
+            font-size: 72px;
+            font-weight: 700;
+            letter-spacing: -2px;
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero .tagline {
+            font-size: 24px;
+            color: #94a3b8;
+            margin-top: 16px;
+            position: relative;
+            z-index: 1;
+            max-width: 500px;
+        }
+
+        .hero .cta-buttons {
+            display: flex;
+            gap: 16px;
+            margin-top: 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            padding: 16px 36px;
+            border-radius: 50px;
+            font-size: 17px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 30px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(99, 102, 241, 0.6);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.08);
+            color: white;
+            padding: 16px 36px;
+            border-radius: 50px;
+            font-size: 17px;
+            font-weight: 600;
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,0.15);
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateY(-2px);
+        }
+
+        .platform-badge {
+            margin-top: 24px;
+            color: #64748b;
+            font-size: 14px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 120px 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #64748b;
+            font-size: 18px;
+            margin-bottom: 72px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .feature-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 24px;
+            padding: 36px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            background: rgba(255,255,255,0.07);
+            border-color: rgba(99, 102, 241, 0.4);
+            transform: translateY(-4px);
+        }
+
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, rgba(99,102,241,0.2), rgba(139,92,246,0.2));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            color: #64748b;
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        /* How it works */
+        .how-it-works {
+            padding: 120px 20px;
+            background: rgba(255,255,255,0.02);
+        }
+
+        .steps {
+            max-width: 700px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 24px;
+        }
+
+        .step-number {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .step-content h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .step-content p {
+            color: #64748b;
+            line-height: 1.7;
+        }
+
+        /* Shortcut showcase */
+        .shortcut-section {
+            padding: 120px 20px;
+            text-align: center;
+        }
+
+        .shortcut-demo {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 40px;
+        }
+
+        .key {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 10px;
+            padding: 12px 20px;
+            font-size: 20px;
+            font-weight: 600;
+            box-shadow: 0 4px 0 rgba(0,0,0,0.4);
+        }
+
+        .key-plus {
+            color: #64748b;
+            font-size: 20px;
+        }
+
+        /* Footer */
+        footer {
+            padding: 60px 20px;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            color: #334155;
+            font-size: 14px;
+        }
+
+        footer span {
+            color: #6366f1;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 48px; }
+            .hero .tagline { font-size: 18px; }
+            .cta-buttons { flex-direction: column; }
+            .section-title { font-size: 36px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="app-icon">🔦</div>
+        <h1>SpotOn</h1>
+        <p class="tagline">Smart spotlight control for your Mac. Activate with a keystroke, anywhere, anytime.</p>
+        <div class="cta-buttons">
+            <a href="#" class="btn-primary">Download for Mac</a>
+            <a href="#features" class="btn-secondary">Learn More</a>
+        </div>
+        <p class="platform-badge">🍎 macOS 13 Ventura or later · Free</p>
+    </section>
+
+    <!-- Features -->
+    <section class="features" id="features">
+        <h2 class="section-title">Everything you need</h2>
+        <p class="section-subtitle">Powerful features, minimal footprint.</p>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">⌨️</div>
+                <h3>Custom Hotkey</h3>
+                <p>Set your own keyboard shortcut to toggle SpotOn instantly. Works even when the app is in the background.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🖱️</div>
+                <h3>Scroll Tracking</h3>
+                <p>Automatically tracks your scroll position to keep the spotlight focused exactly where you need it.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🔆</div>
+                <h3>Spotlight Overlay</h3>
+                <p>Highlights the area you're focused on, dimming the rest of the screen for maximum concentration.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">⚡️</div>
+                <h3>Instant Toggle</h3>
+                <p>Turn SpotOn on or off in an instant from the menu bar or your custom shortcut key.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🎛️</div>
+                <h3>Menu Bar App</h3>
+                <p>Lives quietly in your menu bar. No Dock icon, no clutter — just there when you need it.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🛠️</div>
+                <h3>Customizable Settings</h3>
+                <p>Adjust shortcut keys and preferences to match your personal workflow perfectly.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="how-it-works">
+        <h2 class="section-title">How it works</h2>
+        <p class="section-subtitle">Up and running in seconds.</p>
+
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>Download & Install</h3>
+                    <p>Download SpotOn and drag it to your Applications folder. Launch it and it'll appear in your menu bar.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>Grant Accessibility Permission</h3>
+                    <p>Allow SpotOn to use Accessibility features so it can detect your keyboard shortcut system-wide.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>Set Your Shortcut</h3>
+                    <p>Choose your preferred hotkey combination from Settings. Default is <strong>⌥ + S</strong>.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h3>Focus & Work</h3>
+                    <p>Press your shortcut anytime to toggle the spotlight overlay and stay focused on what matters.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Shortcut showcase -->
+    <section class="shortcut-section">
+        <h2 class="section-title">One shortcut away</h2>
+        <p class="section-subtitle">Activate SpotOn from anywhere on your Mac.</p>
+        <div class="shortcut-demo">
+            <div class="key">⌥ Option</div>
+            <span class="key-plus">+</span>
+            <div class="key">S</div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>Made with <span>♥</span> for Mac · © 2025 SpotOn</p>
+    </footer>
+
+</body>
+</html>
