@@ -1,9 +1,4 @@
 **************************
 # SpotOn
-first test
-
-### first repository
-```
-hi~~
-```
+Smart spotlight control for your Mac. Activate with a keystroke, anywhere, anytime.
 **************************
